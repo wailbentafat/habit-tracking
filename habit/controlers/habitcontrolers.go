@@ -48,25 +48,42 @@ func Addhabit(c*gin.Context){
 
 	c.JSON(http.StatusOK, gin.H{"message": "Habit created", "habit": habit})
 }
-func Gethabits(c*gin.Context){
-	usid,ok:=c.Get("user_id")
-	if !ok{
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-	id_user, ok := usid.(int)
-	 if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
-		return
-	}
-	var habits[]models.Habit
-	if err:=db.DB.Where("user_id=?",id_user).Find(&habits).Error;err!=nil{
-		c.JSON(http.StatusInternalServerError,gin.H{"err":"database"})
-		return
-	}
+func Gethabits(c *gin.Context) {
+    usid, ok := c.Get("user_id")
+    if !ok {
+        c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+        return
+    }
 
-	c.JSON(http.StatusOK, gin.H{"message": "Habit created", "habits": habits})
+    userID, ok := usid.(int)
+    if !ok {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+        return
+    }
+
+    var habits []models.Habit
+    if err := db.DB.Where("user_id = ?", userID).Find(&habits).Error; err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+        return
+    }
+
+    for i := range habits {
+        habitID := habits[i].ID
+
+        if err := db.DB.Where("habit_id = ?", habitID).Find(&habits[i].Reminders).Error; err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+            return
+        }
+
+        if err := db.DB.Where("habit_id = ?", habitID).Find(&habits[i].Goals).Error; err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": "database error"})
+            return
+        }
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "habits retrieved", "habits": habits})
 }
+
 func Get_habitbycategories(c*gin.Context){
 	categoryname := c.Query("categoryname")
 	var category models.Categorie

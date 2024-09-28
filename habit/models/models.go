@@ -35,6 +35,7 @@ type Habit struct{
 	UpdatedAt time.Time `json:"updatedAt"`
 	Progresses []Progres `gorm:"foreignKey:Habit_id" json:"progresses"`
 	Reminders []Reminder `gorm:"foreignKey:Habit_id" json:"reminders"`
+	Goals []Goals `gorm:"foreignKey:Habit_id" json:"goals"`
 }
 type Progres struct{
 	ID uint `gorm:"primaryKey" json:"id"`
