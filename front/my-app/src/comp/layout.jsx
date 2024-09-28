@@ -2,9 +2,11 @@ import React from 'react';
 import { Header } from './header';
 import { SideBar } from './sidbr';
 import { Habits } from './habits';
-//categorie 
+import { useNavigate } from 'react-router-dom';
+
 
 export const Layout = () => {
+    const navigate = useNavigate()
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <div style={{ width: '250px' }}> 
@@ -17,7 +19,7 @@ export const Layout = () => {
                 <div className="p-6 flex ">
                     
                     <h2 className='text-xl font-semibold  ml-2 mt-2 '>My Habits </h2>
-                        <button className="flex ml-auto mt-1 bg-black  text-white font-normal py-2 px-4 rounded-md  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"> +  Add New Habit</button>
+                        <button className="flex ml-auto mt-1 bg-black  text-white font-normal py-2 px-4 rounded-md  hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" onClick={() => navigate('/add-habit')}> +  Add New Habit</button>
                    
                         
                     
