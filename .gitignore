@@ -1,0 +1,48 @@
+# Node modules
+/node_modules
+
+# Build output
+/dist
+/build
+
+# Vite cache
+/.vite
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Misc
+.DS_Store
+*.log
+*.tgz
+# Binaries
+/bin
+/*.exe
+/*.exe~
+/*.dll
+/*.so
+/*.dylib
+
+# Vendor directory
+/vendor/
+
+# Go workspace
+*.test
+*.out
+*.prof
+
+# Coverage reports
+*.cov
+
+# Logs
+*.log
+
+# Environment variables
+.env
